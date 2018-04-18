@@ -1,0 +1,220 @@
+{
+  "elements": [
+    {
+      "id": "actor1",
+      "categoryId": "actor",
+      "name": "Norbert Beaver",
+      "cost": 500.0
+    },
+    {
+      "id": "actor2",
+      "categoryId": "actor",
+      "name": "Dagget Beaver",
+      "cost": 500.0
+    },
+    {
+      "id": "actor3",
+      "categoryId": "actor",
+      "name": "Pinky",
+      "cost": 500.0
+    },
+    {
+      "id": "actor4",
+      "categoryId": "actor",
+      "name": "The Brain",
+      "cost": 550.0
+    },
+    {
+      "id": "actor5",
+      "categoryId": "actor",
+      "name": "Jerry Smith",
+      "cost": 0.0
+    },
+    {
+      "id": "actor6",
+      "categoryId": "actor",
+      "name": "Hobbes",
+      "cost": 600.0
+    },
+    {
+      "id": "actor7",
+      "categoryId": "actor",
+      "name": "Gumball Waterson",
+      "cost": 1000.0
+    },
+    {
+      "id": "actor8",
+      "categoryId": "actor",
+      "name": "Darwin",
+      "cost": 1000.0
+    },
+    {
+      "id": "actor9",
+      "categoryId": "actor",
+      "name": "Courage",
+      "cost": 750.0
+    },
+    {
+      "id": "animal1",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal2",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal3",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal4",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal5",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal6",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal7",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal8",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "animal9",
+      "categoryId": "animal",
+      "name": "Seymour",
+      "cost": 750.0
+    },
+    {
+      "id": "location1",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location2",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location3",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location4",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location5",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location6",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location7",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location8",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "location9",
+      "categoryId": "location",
+      "name": "Chuck-e-Cheese",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect1",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect2",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect3",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect4",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect5",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect6",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect7",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect8",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    },
+    {
+      "id": "specialEffect9",
+      "categoryId": "specialEffect",
+      "name": "explosion",
+      "cost": 750.0
+    }
+  ]
+}
