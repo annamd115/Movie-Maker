@@ -10,22 +10,49 @@ const loadCategories = (loadFunction, errorFunction) => {
 module.exports = loadCategories;
 
 },{}],2:[function(require,module,exports){
+let categories = [];
+let elements = [];
+
+const getCategories = () => {
+  return categories;
+};
+
+const setCategories = (categoriesArray) => {
+  categories = categoriesArray;
+};
+
+const getElements = () => {
+  return elements;
+};
+
+const setElements = (elementsArray) => {
+  elements = elementsArray;
+};
+
+module.exports = {
+  getCategories,
+  setCategories,
+  getElements,
+  setElements,
+};
+
+},{}],3:[function(require,module,exports){
 const loadCategories = require('./categories');
 const loadMovieElements = require('./movie-elements');
-// const printDepartmentDom = require('./departmentDom');
-// const data = require('./data');
+// const printElementsToDom = require('./dom');
+const data = require('./data');
 
 const whenCategoriesLoad = function () {
   const categoriesData = JSON.parse(this.responseText).categories;
   console.log('categories', categoriesData);
-  // data.setCategories(categoriesData);
+  data.setCategories(categoriesData);
 };
 
 const whenMovieElementsLoad = function () {
   const elementsData = JSON.parse(this.responseText).elements;
   console.log('elements', elementsData);
-  // data.setElements(elementsData);
-  // print to dom
+  data.setElements(elementsData);
+  // printElementsToDom(elementsData);
 };
 
 const badCall = function () {
@@ -41,12 +68,12 @@ module.exports = {
   initializer,
 };
 
-},{"./categories":1,"./movie-elements":4}],3:[function(require,module,exports){
+},{"./categories":1,"./data":2,"./movie-elements":5}],4:[function(require,module,exports){
 const dataGatekeeper = require('./dataGatekeeper');
 
 dataGatekeeper.initializer();
 
-},{"./dataGatekeeper":2}],4:[function(require,module,exports){
+},{"./dataGatekeeper":3}],5:[function(require,module,exports){
 const loadMovieElements = (loadFunction, errorFunction) => {
   const myRequest = new XMLHttpRequest();
   myRequest.addEventListener('load', loadFunction);
@@ -57,4 +84,4 @@ const loadMovieElements = (loadFunction, errorFunction) => {
 
 module.exports = loadMovieElements;
 
-},{}]},{},[3]);
+},{}]},{},[4]);
