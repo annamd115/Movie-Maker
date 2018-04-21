@@ -1,19 +1,22 @@
-const loadCategories = require('./categories');
-const loadMovieElements = require('./movie-elements');
-// const printElementsToDom = require('./dom');
+const xhr = require('./xhr');
 const data = require('./data');
+const catDom = require('./categoriesDom');;
+const elDom = require('./elementsDom');
 
 const whenCategoriesLoad = function () {
   const categoriesData = JSON.parse(this.responseText).categories;
   console.log('categories', categoriesData);
   data.setCategories(categoriesData);
+  catDom(categoriesData);
+  console.log(catDom);
 };
 
 const whenMovieElementsLoad = function () {
   const elementsData = JSON.parse(this.responseText).elements;
   console.log('elements', elementsData);
   data.setElements(elementsData);
-  // printElementsToDom(elementsData);
+  elDom(elementsData);
+  console.log(elDom);
 };
 
 const badCall = function () {
@@ -21,8 +24,8 @@ const badCall = function () {
 };
 
 const initializer = () => {
-  loadCategories(whenCategoriesLoad, badCall);
-  loadMovieElements(whenMovieElementsLoad, badCall);
+  xhr.loadCategories(whenCategoriesLoad, badCall);
+  xhr.loadMovieElements(whenMovieElementsLoad, badCall);
 };
 
 module.exports = {
