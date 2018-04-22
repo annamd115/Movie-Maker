@@ -66,18 +66,14 @@ const elDom = require('./elementsDom');
 
 const whenCategoriesLoad = function () {
   const categoriesData = JSON.parse(this.responseText).categories;
-  console.log('categories', categoriesData);
   data.setCategories(categoriesData);
   catDom(categoriesData);
-  console.log(catDom);
 };
 
 const whenMovieElementsLoad = function () {
   const elementsData = JSON.parse(this.responseText).elements;
-  console.log('elements', elementsData);
   data.setElements(elementsData);
   elDom(elementsData);
-  console.log(elDom);
 };
 
 const badCall = function () {
