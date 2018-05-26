@@ -18,6 +18,7 @@ const budgetDom = (selectedElements) => {
   });
   document.getElementById('budget-container').innerHTML =
   `<div class="col-md-12">
+    <h2>Budget: ${budget}</h2>
     <h3>${budget - cost}</h3>
     <div>${printElements(allSelectedElements)}</div>
   </div>`;

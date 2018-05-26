@@ -9,7 +9,6 @@ const catDom = (categories) => {
       <h2>${category.categoryName}</h2>
       <div id="${category.id}" class="selections row"></div>
     </div>`;
-    // need to make an id for elements to go in
   });
   return domString;
 };
@@ -54,8 +53,12 @@ const getSelectedElements = () => {
   return selectedElements;
 };
 
-const setSelectedElements = (selectedElement) => {
-  selectedElements.push(selectedElement);
+const setSelectedElements = (selectedElement, isChecked) => {
+  if (isChecked) {
+    selectedElements.push(selectedElement);
+  } else {
+    selectedElements.indexOf(selectedElement).splice();
+  }
 };
 
 module.exports = {
@@ -125,6 +128,7 @@ const budgetDom = (selectedElements) => {
   });
   document.getElementById('budget-container').innerHTML =
   `<div class="col-md-12">
+    <h2>Budget: ${budget}</h2>
     <h3>${budget - cost}</h3>
     <div>${printElements(allSelectedElements)}</div>
   </div>`;
@@ -154,11 +158,12 @@ const elDom = require('./elementsDom');
 let allElements = [];
 
 const showSelections = (e) => {
+  console.log('e', e);
   allElements = data.getElements();
   const selectedElement = e.target.id;
   allElements.forEach((element) => {
     if (element.id === selectedElement) {
-      data.setSelectedElements(element);
+      data.setSelectedElements(element, e.checked);
     };
   });
   addCosts();
@@ -175,10 +180,6 @@ const setBudget = (e) => {
   e.preventDefault();
   const budget = document.getElementById('budget-input').value;
   data.setBudget(budget);
-  const checkboxes = document.getElementsByClassName('checkboxes');
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].classList.remove('disabled');
-  }
 };
 
 const submitBtnClick = () => {
@@ -191,10 +192,6 @@ const addCosts = () => {
   const allSelectedElements = data.getSelectedElements();
   elDom.budgetDom(allSelectedElements);
 };
-
-// const clickCheckboxes = () => {
-
-// };
 
 module.exports = {
   checkedElement,

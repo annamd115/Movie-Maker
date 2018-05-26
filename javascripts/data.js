@@ -31,8 +31,12 @@ const getSelectedElements = () => {
   return selectedElements;
 };
 
-const setSelectedElements = (selectedElement) => {
-  selectedElements.push(selectedElement);
+const setSelectedElements = (selectedElement, isChecked) => {
+  if (isChecked) {
+    selectedElements.push(selectedElement);
+  } else {
+    selectedElements.indexOf(selectedElement).splice();
+  }
 };
 
 module.exports = {
