@@ -35,7 +35,7 @@ const setSelectedElements = (selectedElement, isChecked) => {
   if (isChecked) {
     selectedElements.push(selectedElement);
   } else {
-    selectedElements.indexOf(selectedElement).splice();
+    selectedElements.indexOf(selectedElement);
   }
 };
 

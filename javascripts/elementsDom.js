@@ -4,12 +4,12 @@ const data = require('./data');
 const elDom = (element) => {
   document.getElementById(element.categoryId).innerHTML +=
   `<div class="col-md-4 checkbox">
-    <input type="checkbox" class="checkboxes disabled" name="options" id="${element.id}" autocomplete="off">
+    <input type="checkbox" class="checkboxes" name="options" id="${element.id}" autocomplete="off" disabled>
     <label for="${element.id}">${element.name}</label>
   </div>`;
 };
 
-const budgetDom = (selectedElements) => {
+const budgetDom = () => {
   const budget = data.getBudget();
   const allSelectedElements = data.getSelectedElements();
   let cost = 0;
@@ -18,9 +18,9 @@ const budgetDom = (selectedElements) => {
   });
   document.getElementById('budget-container').innerHTML =
   `<div class="col-md-12">
-    <h2>Budget: ${budget}</h2>
-    <h3>${budget - cost}</h3>
+    <h2>Budget: $${budget}</h2>
     <div>${printElements(allSelectedElements)}</div>
+    <h3>Remaining Budget: $${budget - cost}</h3>
   </div>`;
 };
 
