@@ -8,7 +8,6 @@ const catDom = (categories) => {
       <h2>${category.categoryName}</h2>
       <div id="${category.id}" class="selections row"></div>
     </div>`;
-    // need to make an id for elements to go in
   });
   return domString;
 };

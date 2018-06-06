@@ -9,7 +9,6 @@ const catDom = (categories) => {
       <h2>${category.categoryName}</h2>
       <div id="${category.id}" class="selections row"></div>
     </div>`;
-    // need to make an id for elements to go in
   });
   return domString;
 };
@@ -23,6 +22,7 @@ module.exports = printToDom;
 },{}],2:[function(require,module,exports){
 let categories = [];
 let elements = [];
+const selectedElements = [];
 let budget = 0;
 
 const getBudget = () => {
@@ -30,7 +30,7 @@ const getBudget = () => {
 };
 
 const setBudget = (newBudget) => {
-  budget = newBudget;
+  budget = newBudget * 1;
 };
 
 const getCategories = () => {
@@ -49,6 +49,18 @@ const setElements = (elementsArray) => {
   elements = elementsArray;
 };
 
+const getSelectedElements = () => {
+  return selectedElements;
+};
+
+const setSelectedElements = (selectedElement, isChecked) => {
+  if (isChecked) {
+    selectedElements.push(selectedElement);
+  } else {
+    selectedElements.indexOf(selectedElement).splice();
+  }
+};
+
 module.exports = {
   getBudget,
   setBudget,
@@ -56,6 +68,8 @@ module.exports = {
   setCategories,
   getElements,
   setElements,
+  getSelectedElements,
+  setSelectedElements,
 };
 
 },{}],3:[function(require,module,exports){
@@ -63,6 +77,7 @@ const xhr = require('./xhr');
 const data = require('./data');
 const catDom = require('./categoriesDom');;
 const elDom = require('./elementsDom');
+const events = require('./events');
 
 const whenCategoriesLoad = function () {
   const categoriesData = JSON.parse(this.responseText).categories;
@@ -73,7 +88,9 @@ const whenCategoriesLoad = function () {
 const whenMovieElementsLoad = function () {
   const elementsData = JSON.parse(this.responseText).elements;
   data.setElements(elementsData);
-  elDom(elementsData);
+  elDom.printToDom(elementsData);
+  events.checkedElement();
+  events.submitBtnClick();
 };
 
 const badCall = function () {
@@ -83,33 +100,111 @@ const badCall = function () {
 const initializer = () => {
   xhr.loadCategories(whenCategoriesLoad, badCall);
   xhr.loadMovieElements(whenMovieElementsLoad, badCall);
+
 };
 
 module.exports = {
   initializer,
 };
 
-},{"./categoriesDom":1,"./data":2,"./elementsDom":4,"./xhr":6}],4:[function(require,module,exports){
+},{"./categoriesDom":1,"./data":2,"./elementsDom":4,"./events":5,"./xhr":7}],4:[function(require,module,exports){
+// const events = require('./events');
+const data = require('./data');
+
 const elDom = (element) => {
   document.getElementById(element.categoryId).innerHTML +=
-  `<div class="col-md-4 checkbox disabled">
-    <input type="checkbox" name="options" id="${element.id}" autocomplete="off" disabled>
+  `<div class="col-md-4 checkbox">
+    <input type="checkbox" class="checkboxes disabled" name="options" id="${element.id}" autocomplete="off">
     <label for="${element.id}">${element.name}</label>
   </div>`;
+};
+
+const budgetDom = (selectedElements) => {
+  const budget = data.getBudget();
+  const allSelectedElements = data.getSelectedElements();
+  let cost = 0;
+  allSelectedElements.forEach((selectedElement) => {
+    cost += selectedElement.cost;
+  });
+  document.getElementById('budget-container').innerHTML =
+  `<div class="col-md-12">
+    <h2>Budget: ${budget}</h2>
+    <h3>${budget - cost}</h3>
+    <div>${printElements(allSelectedElements)}</div>
+  </div>`;
+};
+
+const printElements = (selectedElements) => {
+  let domstring = '';
+  selectedElements.forEach((selectedElement) => {
+    domstring += `<p> ${selectedElement.name} : $${selectedElement.cost}</p>`;
+  });
+  return domstring;
 };
 
 const printToDom = (elements) => {
   elements.forEach(elDom);
 };
 
-module.exports = printToDom;
+module.exports = {
+  printToDom,
+  budgetDom,
+};
 
-},{}],5:[function(require,module,exports){
+},{"./data":2}],5:[function(require,module,exports){
+const data = require('./data');
+const elDom = require('./elementsDom');
+
+let allElements = [];
+
+const showSelections = (e) => {
+  console.log('e', e);
+  allElements = data.getElements();
+  const selectedElement = e.target.id;
+  allElements.forEach((element) => {
+    if (element.id === selectedElement) {
+      data.setSelectedElements(element, e.checked);
+    };
+  });
+  addCosts();
+};
+
+const checkedElement = () => {
+  const checkboxes = document.getElementsByClassName('checkboxes');
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('click', showSelections);
+  };
+};
+
+const setBudget = (e) => {
+  e.preventDefault();
+  const budget = document.getElementById('budget-input').value;
+  data.setBudget(budget);
+};
+
+const submitBtnClick = () => {
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.addEventListener('click', setBudget);
+};
+
+const addCosts = () => {
+  // const budget = data.getBudget();
+  const allSelectedElements = data.getSelectedElements();
+  elDom.budgetDom(allSelectedElements);
+};
+
+module.exports = {
+  checkedElement,
+  submitBtnClick,
+  addCosts,
+};
+
+},{"./data":2,"./elementsDom":4}],6:[function(require,module,exports){
 const dataGatekeeper = require('./dataGatekeeper');
 
 dataGatekeeper.initializer();
 
-},{"./dataGatekeeper":3}],6:[function(require,module,exports){
+},{"./dataGatekeeper":3}],7:[function(require,module,exports){
 const loadCategories = (loadFunction, errorFunction) => {
   const myRequest = new XMLHttpRequest();
   myRequest.addEventListener('load', loadFunction);
@@ -131,4 +226,4 @@ module.exports = {
   loadCategories,
 };
 
-},{}]},{},[5]);
+},{}]},{},[6]);

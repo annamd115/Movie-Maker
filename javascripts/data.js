@@ -1,5 +1,6 @@
 let categories = [];
 let elements = [];
+const selectedElements = [];
 let budget = 0;
 
 const getBudget = () => {
@@ -7,7 +8,7 @@ const getBudget = () => {
 };
 
 const setBudget = (newBudget) => {
-  budget = newBudget;
+  budget = newBudget * 1;
 };
 
 const getCategories = () => {
@@ -26,6 +27,18 @@ const setElements = (elementsArray) => {
   elements = elementsArray;
 };
 
+const getSelectedElements = () => {
+  return selectedElements;
+};
+
+const setSelectedElements = (selectedElement, isChecked) => {
+  if (isChecked) {
+    selectedElements.push(selectedElement);
+  } else {
+    selectedElements.indexOf(selectedElement);
+  }
+};
+
 module.exports = {
   getBudget,
   setBudget,
@@ -33,4 +46,6 @@ module.exports = {
   setCategories,
   getElements,
   setElements,
+  getSelectedElements,
+  setSelectedElements,
 };
