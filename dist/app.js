@@ -57,7 +57,7 @@ const setSelectedElements = (selectedElement, isChecked) => {
   if (isChecked) {
     selectedElements.push(selectedElement);
   } else {
-    selectedElements.indexOf(selectedElement).splice();
+    selectedElements.indexOf(selectedElement);
   }
 };
 
@@ -107,19 +107,19 @@ module.exports = {
   initializer,
 };
 
-},{"./categoriesDom":1,"./data":2,"./elementsDom":4,"./events":5,"./xhr":7}],4:[function(require,module,exports){
+},{"./categoriesDom":1,"./data":2,"./elementsDom":4,"./events":5,"./xhr":8}],4:[function(require,module,exports){
 // const events = require('./events');
 const data = require('./data');
 
 const elDom = (element) => {
   document.getElementById(element.categoryId).innerHTML +=
   `<div class="col-md-4 checkbox">
-    <input type="checkbox" class="checkboxes disabled" name="options" id="${element.id}" autocomplete="off">
+    <input type="checkbox" class="checkboxes" name="options" id="${element.id}" autocomplete="off" disabled>
     <label for="${element.id}">${element.name}</label>
   </div>`;
 };
 
-const budgetDom = (selectedElements) => {
+const budgetDom = () => {
   const budget = data.getBudget();
   const allSelectedElements = data.getSelectedElements();
   let cost = 0;
@@ -128,9 +128,9 @@ const budgetDom = (selectedElements) => {
   });
   document.getElementById('budget-container').innerHTML =
   `<div class="col-md-12">
-    <h2>Budget: ${budget}</h2>
-    <h3>${budget - cost}</h3>
+    <h2>Budget: $${budget}</h2>
     <div>${printElements(allSelectedElements)}</div>
+    <h3 id="userBudget">Remaining Budget: $${budget - cost}</h3>
   </div>`;
 };
 
@@ -154,32 +154,32 @@ module.exports = {
 },{"./data":2}],5:[function(require,module,exports){
 const data = require('./data');
 const elDom = require('./elementsDom');
-
-let allElements = [];
+const progress = require('./status-bar');
+const selections = [];
 
 const showSelections = (e) => {
-  console.log('e', e);
-  allElements = data.getElements();
-  const selectedElement = e.target.id;
-  allElements.forEach((element) => {
-    if (element.id === selectedElement) {
-      data.setSelectedElements(element, e.checked);
+  data.getElements().forEach((element) => {
+    if (element.id === e.target.id) {
+      data.setSelectedElements(element, e.target.checked);
+      selections.push(element);
     };
   });
-  addCosts();
+  elDom.budgetDom();
+  progress.updateProgress(selections);
 };
 
 const checkedElement = () => {
-  const checkboxes = document.getElementsByClassName('checkboxes');
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].addEventListener('click', showSelections);
-  };
+  document.querySelectorAll('.checkboxes')
+    .forEach((checkbox) => checkbox.addEventListener('click', showSelections));
 };
 
-const setBudget = (e) => {
-  e.preventDefault();
+const setBudget = () => {
+  // e.preventDefault();
   const budget = document.getElementById('budget-input').value;
   data.setBudget(budget);
+  elDom.budgetDom();
+  document.querySelectorAll('.checkboxes')
+    .forEach((checkbox) => checkbox.disabled = false);
 };
 
 const submitBtnClick = () => {
@@ -187,24 +187,47 @@ const submitBtnClick = () => {
   submitBtn.addEventListener('click', setBudget);
 };
 
-const addCosts = () => {
-  // const budget = data.getBudget();
-  const allSelectedElements = data.getSelectedElements();
-  elDom.budgetDom(allSelectedElements);
-};
-
 module.exports = {
   checkedElement,
   submitBtnClick,
-  addCosts,
 };
 
-},{"./data":2,"./elementsDom":4}],6:[function(require,module,exports){
+},{"./data":2,"./elementsDom":4,"./status-bar":7}],6:[function(require,module,exports){
 const dataGatekeeper = require('./dataGatekeeper');
 
 dataGatekeeper.initializer();
 
 },{"./dataGatekeeper":3}],7:[function(require,module,exports){
+const data = require('./data');
+
+const updateProgress = (selections) => {
+  const progressBar = document.getElementById('progressBar');
+  const whichCategory = [...new Set(selections.map(item => item.categoryId)),];
+  // console.log('from progressDOM', whichCategory);
+  if (whichCategory.length === 1) {
+    progressBar.classList.add('twentyFive');
+  } else if (whichCategory.length === 2) {
+    progressBar.classList.add('fifty');
+  } else if (whichCategory.length === 3) {
+    progressBar.classList.add('seventyFive');
+  } else if (whichCategory.length === 4 && data.getBudget() >= 0) {
+    progressBar.classList.add('oneHundred');
+    document.getElementById('userBudget').classList.add('green');
+    document.getElementById('userBudget').classList.remove('red');
+    document.getElementById('message').innerHTML = `<h3 class="green">Let's make this movie!!</h3>`;
+  } else if (whichCategory.length === 4 && data.getBudget() < 0) {
+    progressBar.classList.add('oneHundred');
+    document.getElementById('userBudget').classList.add('red');
+    document.getElementById('userBudget').classList.remove('green');
+    document.getElementById('message').innerHTML = `<h3 class="red">Sorry, insuffient funds.</h3>`;
+  };
+};
+
+module.exports = {
+  updateProgress,
+};
+
+},{"./data":2}],8:[function(require,module,exports){
 const loadCategories = (loadFunction, errorFunction) => {
   const myRequest = new XMLHttpRequest();
   myRequest.addEventListener('load', loadFunction);

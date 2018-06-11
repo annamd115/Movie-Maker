@@ -20,7 +20,7 @@ const budgetDom = () => {
   `<div class="col-md-12">
     <h2>Budget: $${budget}</h2>
     <div>${printElements(allSelectedElements)}</div>
-    <h3>Remaining Budget: $${budget - cost}</h3>
+    <h3 id="userBudget">Remaining Budget: $${budget - cost}</h3>
   </div>`;
 };
 

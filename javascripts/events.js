@@ -1,13 +1,17 @@
 const data = require('./data');
 const elDom = require('./elementsDom');
+const progress = require('./status-bar');
+const selections = [];
 
 const showSelections = (e) => {
   data.getElements().forEach((element) => {
     if (element.id === e.target.id) {
       data.setSelectedElements(element, e.target.checked);
+      selections.push(element);
     };
   });
   elDom.budgetDom();
+  progress.updateProgress(selections);
 };
 
 const checkedElement = () => {
